@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-general-table',
   standalone: true,
-  imports: [HttpClientModule, NgIf, NgFor, MatTableModule],
+  imports: [HttpClientModule, MatTableModule],
   templateUrl: './general-table.html',
   styleUrl: './general-table.scss'
 })
