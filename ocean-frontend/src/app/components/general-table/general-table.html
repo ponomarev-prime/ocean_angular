@@ -1,1 +1,15 @@
-<p>general-table works!</p>
+<section class="org-card" *ngIf="org">
+  <h2>Информация об организации</h2>
+  <div class="org-field"><span>Название:</span> <strong>{{org.name}}</strong></div>
+  <div class="org-field"><span>Юридический адрес:</span> <span>{{org.address}}</span></div>
+  <div class="org-field"><span>ИНН:</span> <span>{{org.inn}}</span></div>
+  <div class="org-field"><span>КПП:</span> <span>{{org.kpp}}</span></div>
+  <div class="org-field"><span>ОГРН:</span> <span>{{org.ogrn}}</span></div>
+  <div class="org-field"><span>Банк:</span> <span>{{org.bank}}</span></div>
+  <div class="org-field"><span>БИК:</span> <span>{{org.bik}}</span></div>
+  <div class="org-field"><span>Р/сч:</span> <span>{{org.rs}}</span></div>
+  <div class="org-field"><span>К/сч:</span> <span>{{org.ks}}</span></div>
+  <div class="org-field"><span>ОКПО:</span> <span>{{org.okpo}}</span></div>
+  <div class="org-field"><span>Генеральный директор:</span> <span>{{org.director}}</span></div>
+  <div class="org-field"><span>Идентификатор ЭДО (Диадок):</span> <span>{{org.edo_id}}</span></div>
+</section>

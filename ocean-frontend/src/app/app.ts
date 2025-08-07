@@ -1,21 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { CaptchaComponent } from './components/captcha/captcha';
+import { Component } from '@angular/core';
 import { GeneralTable } from './components/general-table/general-table';
 import { DetailsTable } from './components/details-table/details-table';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgIf, CaptchaComponent, GeneralTable, DetailsTable],
+  imports: [GeneralTable, DetailsTable, HttpClientModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('ocean development');
-  isCaptchaPassed = signal(false);
-
-  onCaptchaSuccess() {
-    this.isCaptchaPassed.set(true);
-  }
-}
+export class App {}
