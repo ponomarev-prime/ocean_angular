@@ -1,0 +1,18 @@
+<main class="main">
+  <ng-container *ngIf="!isCaptchaPassed(); else content">
+    <app-captcha (success)="onCaptchaSuccess()"></app-captcha>
+  </ng-container>
+  <ng-template #content>
+    <header class="brand-header">
+      <img src="assets/logo.svg" alt="ocean development logo" class="logo" />
+      <div class="brand-title">
+        <h1>o<span class="dot">•</span>cean development</h1>
+        <p class="slogan">Полон открытий</p>
+      </div>
+    </header>
+    <section class="tables-section">
+      <app-general-table></app-general-table>
+      <app-details-table></app-details-table>
+    </section>
+  </ng-template>
+</main>
