@@ -14,7 +14,7 @@ import { Api } from '../../services/api';
 })
 export class DetailsTable implements OnInit {
   private api = inject(Api);
-  displayedColumns: string[] = ['department', 'contact'];
+  displayedColumns: string[] = ['department', 'email', 'name'];
   dataSource: any[] = [];
   total = 0;
   pageSize = 10;
