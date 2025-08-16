@@ -2,12 +2,10 @@
 	encode gzip zstd
 	root * /usr/share/caddy
 
-	# 1) Всё под /api/* проксируем в Node
 	handle_path /api/* {
 		reverse_proxy api:3000
 	}
 
-	# 2) Остальные запросы — SPA: файл если есть, иначе index.html
 	handle {
 		try_files {path} /index.html
 		file_server
