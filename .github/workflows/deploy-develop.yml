@@ -20,7 +20,7 @@ jobs:
         run: |
           cd ocean-frontend
           npm ci
-          npm run build --configuration production
+          npm run build -- --configuration production
 
       - name: Add host key (known_hosts)
         run: |
