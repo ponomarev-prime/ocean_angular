@@ -1,0 +1,29 @@
+﻿services:
+  api:
+    build:
+      context: ../backend         # относительный путь от deploy/
+    env_file:
+      - ./backend.env             # этот файл будет лежать на сервере
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks: [ocean]
+
+  caddy:
+    image: caddy:2
+    depends_on: [api]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - ./site:/usr/share/caddy:ro    # сюда Actions будут заливать dist
+    restart: unless-stopped
+    networks: [ocean]
+
+networks:
+  ocean:
+
+volumes:
+  caddy_data:
