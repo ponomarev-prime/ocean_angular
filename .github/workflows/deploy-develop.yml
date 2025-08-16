@@ -62,6 +62,7 @@ jobs:
           target: "/opt/ocean/ocean_angular/deploy/site"
           overwrite: true
           rm: true
+          strip_components: 4
 
       # 4) Собираем и перезапускаем контейнеры уже ПОСЛЕ pull
       - name: Build & restart containers on VPS
@@ -74,5 +75,6 @@ jobs:
             set -e
             cd /opt/ocean/ocean_angular/deploy
             docker compose build api
-            docker compose up -d api caddy
+            docker compose up -d --force-recreate --no-deps caddy
+            docker compose up -d api
             docker compose ps
