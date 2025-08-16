@@ -27,13 +27,14 @@ jobs:
             git reset --hard origin/develop
             git clean -fdx
 
-      - name: Write backend.env from secrets
-        run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" > deploy/backend.env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> deploy/backend.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> deploy/backend.env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> deploy/backend.env
-          echo "PORT=${{ secrets.PORT }}" >> deploy/backend.env
+            # Создаём backend.env прямо на сервере
+            cat > deploy/backend.env <<EOF
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            PORT=${{ secrets.PORT }}
+            EOF
 
       # 2) Локально (в CI) собираем фронт
       - name: Checkout repo
