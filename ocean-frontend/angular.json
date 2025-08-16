@@ -64,7 +64,8 @@
               "buildTarget": "ocean-frontend:build:production"
             },
             "development": {
-              "buildTarget": "ocean-frontend:build:development"
+              "buildTarget": "ocean-frontend:build:development",
+              "proxyConfig": "proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"
@@ -107,6 +108,7 @@
   "cli": {
     "schematicCollections": [
       "angular-eslint"
-    ]
+    ],
+    "analytics": false
   }
 }
