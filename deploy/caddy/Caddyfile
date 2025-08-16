@@ -1,12 +1,16 @@
 ﻿oceand.ponomarev-aa.ru {
-    root * /usr/share/caddy
-    encode gzip zstd
-    file_server
+	# где лежит билд Angular
+	root * /usr/share/caddy
 
-    handle_path /api/* {
-        reverse_proxy api:3000
-    }
+	encode gzip zstd
 
-    # Angular SPA fallback
-    try_files {path} /index.html
+	# API → в контейнер api:3000
+	@api path /api/*
+	handle @api {
+		reverse_proxy api:3000
+	}
+
+	# SPA fallback: сначала пробуем файл, иначе index.html
+	try_files {path} /index.html
+	file_server
 }

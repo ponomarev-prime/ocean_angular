@@ -33,9 +33,9 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "ocean-frontend/dist/ocean-frontend/browser/*"
+          source: "ocean-frontend/dist/ocean-frontend/browser/**"
           target: "/opt/ocean/ocean_angular/deploy/site"
-          strip_components: 3
+          strip_components: 4
           overwrite: true
           rm: true
 
