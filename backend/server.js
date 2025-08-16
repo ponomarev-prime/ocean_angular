@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../deploy/backend.env' });
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
@@ -19,9 +19,7 @@ const apiLimiter = rateLimit({
 });
 
 /* ===== Middlewares (before routes) ===== */
-app.use(cors({
-  origin: ['http://localhost:4200', 'https://oceand.ponomarev-aa.ru']
-}));
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());

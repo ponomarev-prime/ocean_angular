@@ -8,6 +8,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Add host key (known_hosts)
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      # 1) СНАЧАЛА обновляем репозиторий на сервере
+      - name: Pull repo on VPS first
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/ocean/ocean_angular
+            git fetch origin develop
+            git reset --hard origin/develop
+            git clean -fdx
+
+      # 2) Локально (в CI) собираем фронт
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -22,31 +42,28 @@ jobs:
           npm ci
           npm run build -- --configuration production
 
-      - name: Add host key (known_hosts)
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Upload front dist to VPS
+      # 3) Кладём собранный фронт на сервер
+      - name: Upload frontend dist to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "ocean-frontend/dist/ocean-frontend/browser/**"
+          source: "ocean-frontend/dist/ocean-frontend/browser/*"
           target: "/opt/ocean/ocean_angular/deploy/site"
-          strip_components: 4
           overwrite: true
           rm: true
 
-      - name: Build/restart containers on VPS
+      # 4) Собираем и перезапускаем контейнеры уже ПОСЛЕ pull
+      - name: Build & restart containers on VPS
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            set -e
             cd /opt/ocean/ocean_angular/deploy
             docker compose build api
-            docker compose up -d
+            docker compose up -d api caddy
             docker compose ps
