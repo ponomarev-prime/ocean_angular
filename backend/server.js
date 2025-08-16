@@ -1,4 +1,7 @@
-require('dotenv').config({ path: '../deploy/backend.env' });
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve(__dirname, '../deploy/backend.env')
+});
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
