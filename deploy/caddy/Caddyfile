@@ -1,4 +1,4 @@
-﻿oceand.ponomarev-aa.ru, oceand.ru {
+﻿oceand.ponomarev-aa.ru {
     root * /usr/share/caddy
     encode gzip zstd
     file_server
