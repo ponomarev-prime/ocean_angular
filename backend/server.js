@@ -19,7 +19,9 @@ const apiLimiter = rateLimit({
 });
 
 /* ===== Middlewares (before routes) ===== */
-app.use(cors({ origin: ['http://localhost:4200'] })); // dev whitelist
+app.use(cors({
+  origin: ['http://localhost:4200', 'https://oceand.ponomarev-aa.ru']
+}));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
