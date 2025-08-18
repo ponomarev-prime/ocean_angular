@@ -19,8 +19,8 @@ export class DetailsTable implements OnInit {
   total = 0;
   pageSize = 10;
   pageIndex = 0;
-  sort = 'department';
-  order = 'asc';
+  sort: 'id' | 'department' | 'email' = 'department';
+  order: 'asc' | 'desc' = 'asc';
   search = '';
 
   ngOnInit() {
@@ -40,9 +40,10 @@ export class DetailsTable implements OnInit {
     this.loadData();
   }
 
+
   onSort(event: any) {
-    this.sort = event.active;
-    this.order = event.direction || 'asc';
+    this.sort = event.active as 'id' | 'department' | 'email';
+    this.order = (event.direction || 'asc') as 'asc' | 'desc';
     this.loadData();
   }
 }
