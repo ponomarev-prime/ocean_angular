@@ -1,4 +1,4 @@
 ﻿export const environment = {
   production: true,
-  apiUrl: 'https://oceand.ponomarev-aa.ru/api'
+  apiUrl: 'https://api.ponomarev-aa.ru/api'
 };
