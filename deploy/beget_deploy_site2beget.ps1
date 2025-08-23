@@ -68,10 +68,19 @@ if (-not (Test-Path $FrontendDir)) {
   exit 1
 }
 
-Write-Host "==> Building Angular project..."
 Push-Location $FrontendDir
 try {
+  Write-Host "==> Installing NPM dependencies..."
+  if (Test-Path "package-lock.json") {
+    npm ci
+  } else {
+    npm install
+  }
+  if ($LASTEXITCODE -ne 0) { throw "Сбой установки зависимостей (npm ci/install)." }
+
+  Write-Host "==> Building Angular project..."
   npm run build -- --configuration production --base-href $BaseHref --deploy-url $DeployUrl
+  if ($LASTEXITCODE -ne 0) { throw "Сбой сборки Angular (npm run build)." }
 } finally {
   Pop-Location
 }
